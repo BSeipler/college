@@ -32,5 +32,5 @@ foreach ($courseIds as $course) {
 
 /* Loop over the course info and display it on the page */
 foreach ($courseInfo as $course) {
-  echo $course[0]['course_name'] . '<br>';
+  echo '<tr><td>' . $course[0]['course_name'] . '</td></tr>';
 } 

@@ -20,6 +20,10 @@ $statement = $pdo->prepare("SELECT * FROM courses WHERE status = '1'");
 $statement->execute();
 $activeCourses = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+if (!$activeCourses) {
+  exit;
+}
+
 foreach ($activeCourses as $course) {
   if (in_array($course['course_id'], $courses)) { ?>
     <tr>

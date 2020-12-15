@@ -11,28 +11,78 @@ $states = array( 'AL'=>'Alabama', 'AK'=>'Alaska', 'AZ'=>'Arizona', 'AR'=>'Arkans
     <title>Document</title>
 </head>
 <body>
-    <h1>Registration Form</h1>
-   <form action="registration_process.php" method="POST">
-        First Name: <input type="text" name="firstname"><br>
-        Last Name: <input type="text" name="lastname"><br>
-        Email: <input type="email" name="email"><br>
-        Phone: <input type="text" name="phone"><br>
-        Street Address: <input type="text" name="street_address"><br>
-        City: <input type="text" name="city"><br>
-        State: <select name="state">
-                <?php
-                foreach ($states as $k => $v) {
-                        echo "<option value='$v'>$v</option>";
-                    }
-                ?>        
-               </select> 
-        Zipcode: <input type="text" name="zipcode">
-        Gender: <input type="radio" name="gender" value="male">Male
-                <input type="radio" name="gender" value="female">Female
-                <input type="radio" name="gender" value="private">Prefer not to say
-        Special Needs: <textarea name="special_needs" cols="30" rows="10"></textarea>
-        Password: <input type="password" name="password">
-        <button type="submit">Register</button>
-    </form> 
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1>Registration Form</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <form action="registration_process.php" method="POST" id="registerForm">
+                    <div class="form-group">
+                        <input type="text" name="firstname" placeholder="First Name" class="form-control"> 
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="lastname" placeholder="Last Name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="phone" placeholder="Phone Number" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="street_address" placeholder="Street Address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="city" placeholder="City" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <select name="state" class="form-control">
+                                <?php
+                                foreach ($states as $k => $v) {
+                                        echo "<option value='$v'>$v</option>";
+                                    }
+                                ?>        
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="zipcode" placeholder="zipcode" class="form-control">
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="gender" value="male" id="gender1">
+                        <label for="gender1">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="gender" value="female" id="gender2">
+                        <label for="gender2">Female</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="gender" value="private" id="gender3">
+                        <label for="gender3">Prefer not to say</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="special_needs" cols="30" rows="10" class="form-control" placeholder="Special Needs"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="createPassword" placeholder="Create Password" class="form-control" id="createPassword">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Confirm Password" class="form-control" id="confirmPassword">
+                    </div>
+                    <div style="display: none;" id="passwordError" class="text-danger form-group text-center">Passwords do not match</div>
+                    <div class="formgroup">
+                        <button type="submit" class="btn btn-primary btn-block" id="registerBtn">Register</button>
+                    </div>
+                </form> 
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <script src="index.js"></script>
 </body>
 </html>

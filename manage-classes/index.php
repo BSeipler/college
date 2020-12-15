@@ -4,33 +4,43 @@ include '../components/header.php';
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-   <h1>Choose your courses</h1> 
-   <table border='1'>
-        <thead>
-            <tr>
-                <th>Course Name</th>
-                <th>Course Number</th>
-                <th>Day/Time</th>
-                <th>Cost</th>
-                <th>Description</th>
-                <th>Credits</th>
-                <th>Instructor</th>
-            </tr> 
-        </thead>
-        <tbody>
-            <form action="drop_process.php" method="POST">
-            <?php include 'list_enrolled_courses.php'; ?>
-        </tbody>
-   </table>
-            <button type="submit">Drop</button>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1>Choose classes to drop.</h1> 
+        </div>
+    </div>
+</div>
+
+<div class="container" id="coursesList">
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Course Name</td>
+                        <td>Course Number</td>
+                        <td>Day/Time</td>
+                        <td>Cost</td>
+                        <td>Description</td>
+                        <td>Credits</td>
+                        <td>Instructor</td>
+                        <td>Add</td> 
+                    </tr> 
+                </thead> 
+                <tbody>
+                    <form action="drop_process.php" method="POST">
+                    <?php include 'list_enrolled_courses.php'; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-right" type="submit">Confirm Drop</button>
             </form>
+        </div> 
+    </div>
+</div>
 
 <?php include '../components/footer.php';
