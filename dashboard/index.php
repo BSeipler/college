@@ -1,4 +1,9 @@
-<?php include '../components/header.php'; ?>
+<?php 
+
+include '../components/header.php'; 
+$path = "../uploads/profile-pictures/" . $_SESSION['profile_picture']
+
+?>
 <div class="container">
       <div class="row text-center">
             <div class="col">
@@ -29,6 +34,7 @@
             </div>
       </div>
 </div>
+<img src="<?=$path?>" alt="Profile Picture">
    <?php 
          include '../components/footer.php';
    ?>

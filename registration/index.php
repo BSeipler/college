@@ -22,7 +22,7 @@ $states = array( 'AL'=>'Alabama', 'AK'=>'Alaska', 'AZ'=>'Arizona', 'AR'=>'Arkans
         <div class="row">
             <div class="col"></div>
             <div class="col">
-                <form action="registration_process.php" method="POST" id="registerForm">
+                <form action="registration_process.php" method="POST" id="registerForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <input type="text" name="firstname" placeholder="First Name" class="form-control"> 
                     </div>
@@ -31,6 +31,10 @@ $states = array( 'AL'=>'Alabama', 'AK'=>'Alaska', 'AZ'=>'Arizona', 'AR'=>'Arkans
                     </div>
                     <div class="form-group">
                         <input type="email" name="email" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePicture">Upload profile picture:</label>
+                        <input type="file" name="profilePicture" class="form-control-file" id="profilePicture">
                     </div>
                     <div class="form-group">
                         <input type="text" name="phone" placeholder="Phone Number" class="form-control">

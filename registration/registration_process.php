@@ -2,6 +2,7 @@
 
 include '../utils/db_credentials.php';
 
+
 /* Filter the incoming inputs */
 foreach ($_POST as $k => $v) {
     if ($k === 'email') {
@@ -24,6 +25,39 @@ $state = $_POST['state'];
 $zipcode = $_POST['zipcode']; 
 $gender = $_POST['gender'];
 $specialNeeds = $_POST['special_needs'];
+$profilePictureFile = $_FILES['profilePicture'];
+
+/* Function to randomly generate a file name for the profile picture incase it already exists */
+function getRandomName($n) { 
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+    $randomString = ''; 
+  
+    for ($i = 0; $i < $n; $i++) { 
+        $index = rand(0, strlen($characters) - 1); 
+        $randomString .= $characters[$index]; 
+    } 
+  
+    return $randomString; 
+} 
+
+/* Function to check to see if the profile picture filename is already taken */
+$newFileName = '';
+function checkIfFileNameExistsInUploadsAndPlace ($file='') {
+    if (!$file) {
+        return;
+    } 
+    $fileName = $file['name'];
+    $str = explode('.', $fileName); 
+    while (file_exists('../uploads/profile-pictures/' . $fileName)) {
+        $fileName = getRandomName(10); 
+    } 
+    $str[0] = $fileName; 
+    $GLOBALS['newFileName'] = implode('.', $str); 
+    $path = '../uploads/profile-pictures/' . $GLOBALS['newFileName']; 
+    move_uploaded_file($file['tmp_name'], $path);
+}
+
+checkIfFileNameExistsInUploadsAndPlace($profilePictureFile);
 
 /* Check if student already exists by email */
 $statement = $pdo->prepare("SELECT email FROM students WHERE email = '$email'");
@@ -39,8 +73,8 @@ if ($student) {
 /* encrypt the password */
 $hash = password_hash($_POST['password'], PASSWORD_ARGON2ID);
 
-$statement = "INSERT INTO students (firstname, lastname, email, phone, street_address, city, state, zipcode, gender, special_needs, password)
-VALUES ('$firstname', '$lastname', '$email', '$phone', '$streetAddress', '$city', '$state', '$zipcode', '$gender', '$specialNeeds', '$hash')";
+$statement = "INSERT INTO students (firstname, lastname, email, phone, street_address, city, state, zipcode, gender, special_needs, password, profile_picture)
+VALUES ('$firstname', '$lastname', '$email', '$phone', '$streetAddress', '$city', '$state', '$zipcode', '$gender', '$specialNeeds', '$hash', '$newFileName')";
 
 $pdo->exec($statement);
 
@@ -62,6 +96,7 @@ if ($student) {
       $_SESSION['zipcode'] = $student[0]['zipcode'];
       $_SESSION['gender'] = $student[0]['gender'];
       $_SESSION['special_needs'] = $student[0]['specialNeeds']; 
+      $_SESSION['profile_picture'] = $student[0]['profile_picture'];
       header('Location: ../dashboard'); 
       exit();
   }
