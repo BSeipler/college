@@ -6,7 +6,8 @@ $studentId = $_SESSION['student_id'];
 $courses = [];
 
 /* Make database query to grab the students info */
-$statement = $pdo->prepare("SELECT course_id FROM enrollments WHERE student_id = '$studentId'");
+$statement = $pdo->prepare("SELECT course_id FROM enrollments WHERE student_id = :studentId");
+$statement->bindValue(':studentId', $studentId);
 $statement->execute();
 $courseIds = $statement->fetchAll(PDO::FETCH_ASSOC);
 

@@ -2,7 +2,13 @@
 
 include '../utils/db_credentials.php';
 
+$method = $_SERVER['REQUEST_METHOD'];
 
+/* Redirect if the request method isn't POST */
+if ($method !== 'POST') {
+    header('Location: index.php');
+    exit;
+} else {
 /* Filter the incoming inputs */
 foreach ($_POST as $k => $v) {
     if ($k === 'email') {
@@ -73,13 +79,30 @@ if ($student) {
 /* encrypt the password */
 $hash = password_hash($_POST['password'], PASSWORD_ARGON2ID);
 
-$statement = "INSERT INTO students (firstname, lastname, email, phone, street_address, city, state, zipcode, gender, special_needs, password, profile_picture)
-VALUES ('$firstname', '$lastname', '$email', '$phone', '$streetAddress', '$city', '$state', '$zipcode', '$gender', '$specialNeeds', '$hash', '$newFileName')";
+$statement = $pdo->prepare("INSERT INTO students (firstname, lastname, email, phone, street_address, city, state, zipcode, gender, special_needs, password, profile_picture)
+VALUES (:firstname, :lastname, :email, :phone, :streetAddress, :city, :state, :zipcode, :gender, :specialNeeds, :password, :profilePicture)");
 
-$pdo->exec($statement);
+$statement->bindValue(':firstname', $firstname);
+$statement->bindValue(':lastname', $lastname);
+$statement->bindValue(':email', $email);
+$statement->bindValue(':phone', $phone);
+$statement->bindValue(':streetAddress', $streetAddress);
+$statement->bindValue(':city', $city);
+$statement->bindValue(':state', $state);
+$statement->bindValue(':zipcode', $zipcode);
+$statement->bindValue(':gender', $gender);
+$statement->bindValue(':specialNeeds', $specialNeeds);
+$statement->bindValue(':password', $hash);
+$statement->bindValue(':profilePicture', $newFileName);
 
-$statement = $pdo->prepare("SELECT * FROM students WHERE email = '$email'");
 $statement->execute();
+
+$statement = $pdo->prepare("SELECT * FROM students WHERE email = :email");
+
+$statement->bindValue(':email', $email);
+
+$statement->execute();
+
 $student = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 /* Compare the passwords and redirect to dashboard if they match */
@@ -103,4 +126,5 @@ if ($student) {
   header('Location: index.php'); 
 } else {
   header('Location: index.php'); 
+}
 } 

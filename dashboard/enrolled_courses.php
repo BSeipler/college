@@ -8,7 +8,9 @@ include '../utils/db_credentials.php';
 $courses = [];
 
 /* Make database query to grab the course id's info */
-$statement = $pdo->prepare("SELECT course_id FROM enrollments WHERE student_id = '$studentId'");
+$statement = $pdo->prepare("SELECT course_id FROM enrollments WHERE student_id = :studentId");
+
+$statement->bindValue(':studentId', $studentId);
 $statement->execute();
 $courseIds = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -24,8 +26,12 @@ $courseInfo = [];
 /* Loop over the course id's, make database query with each id, then add the info to the course info array */
 foreach ($courseIds as $course) {
   $courseId = $course['course_id'];
-  $statement = $pdo->prepare("SELECT course_number, course_name FROM courses WHERE course_id = '$courseId'");
+  $statement = $pdo->prepare("SELECT course_number, course_name FROM courses WHERE course_id = :courseId");
+
+  $statement->bindValue(':courseId', $courseId);
+
   $statement->execute();
+
   $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   array_push($courseInfo, $result);
 }

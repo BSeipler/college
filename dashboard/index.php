@@ -17,7 +17,7 @@ $path = "../uploads/profile-pictures/" . $_SESSION['profile_picture']
             </div>
             <div class="col">
                   <h3>Enrolled Courses</h3>
-                  <table class="table table-bordered">
+                  <table class="table table-bordered table-striped">
                         <thead>
                               <tr>
                                     <th>Course Name</th> 

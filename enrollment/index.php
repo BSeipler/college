@@ -15,7 +15,7 @@ include '../components/header.php';
 <div class="container">
     <div class="row">
         <div class="col">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <td>Course Name</td>

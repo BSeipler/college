@@ -1,6 +1,6 @@
 <?php include '../components/header.php'; ?>
 
-<table border='1'>
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Course Name</th>        
@@ -10,9 +10,9 @@
     <tbody>
        <?php include 'billing_process.php'; ?>
        <tr>
-            <td>Total:</td>
+            <td class="text-right">Total:</td>
             <td>$<?=$totalCost;?></td>
        </tr>
     </tbody>
 </table>
-<button>Make Payment</button>
+<button class="btn btn-primary">Make Payment</button>

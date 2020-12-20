@@ -6,7 +6,8 @@ include '../utils/db_credentials.php';
 $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
 /* Make database query to grab the students info */
-$statement = $pdo->prepare("SELECT * FROM students WHERE email = '$email'");
+$statement = $pdo->prepare("SELECT * FROM students WHERE email = :email");
+$statement->bindValue(':email', $email);
 $statement->execute();
 $student = $statement->fetchAll(PDO::FETCH_ASSOC);
 

@@ -26,7 +26,8 @@ $coursesCostAndName = [];
 /* Loop over the course id's, make database query with each id, then add the info to the course info array */
 foreach ($courseIds as $course) {
   $courseId = $course['course_id'];
-  $statement = $pdo->prepare("SELECT cost, course_name FROM courses WHERE course_id = '$courseId'");
+  $statement = $pdo->prepare("SELECT cost, course_name FROM courses WHERE course_id = :courseId");
+  $statement->bindValue(':courseId', $courseId);
   $statement->execute();
   $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   array_push($coursesCostAndName, $result);
